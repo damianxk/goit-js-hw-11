@@ -1,6 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
+import axios from 'axios';
 
 const API_KEY = '38252665-7f08167a7ac72c66bae4a569f';
 const API_URL = 'https://pixabay.com/api/';
@@ -38,10 +39,10 @@ async function searchImages(query, page) {
   )}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${RESULTS_PER_PAGE}`;
 
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    const images = data.hits;
-    const totalHits = data.totalHits;
+    const response = await axios.get(url);
+    const data = await response;
+    const images = data.data.hits;
+    const totalHits = data.data.totalHits;
 
     if (images.length > 0) {
       images.forEach(image => {
